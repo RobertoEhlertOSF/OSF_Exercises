@@ -1,6 +1,9 @@
-public with sharing class WeatherIntegrationControllerExtension {
-    
-	private Account accountRecord {
+public with sharing class WeatherIntegrationControllerExtension {    
+
+    public Wrapperclass wrapper {get; set;}
+    public String urlIcon {get; set;}
+
+    private Account accountRecord {
         get{
             if(accountRecord == null){
                 accountRecord = (Account) sdtController.getRecord();
@@ -9,16 +12,14 @@ public with sharing class WeatherIntegrationControllerExtension {
         }
         set;
     }
-    public Wrapperclass wrapper {get; set;}
-    public string urlIcon {get; set;}
     
     private ApexPages.StandardController sdtController;
-    private static final string API_KEY = '592da47fbc6e826131d7ecec2eb3df49';
-    private static final string URL_ENDPOINT = 'https://api.openweathermap.org/data/2.5/weather?q=';
-    private static final string URL_ICON = 'https://openweathermap.org/img/wn/';
+    private static final String API_KEY = '592da47fbc6e826131d7ecec2eb3df49';
+    private static final String URL_ENDPOINT = 'https://api.openweathermap.org/data/2.5/weather?q=';
+    private static final String URL_ICON = 'https://openweathermap.org/img/wn/';
     
     public WeatherIntegrationControllerExtension(ApexPages.standardController sdtController){
-     	   this.accountRecord = (Account) sdtController.getRecord();
+     	   this.sdtController = sdtController;
     }
     
     public void init(){
