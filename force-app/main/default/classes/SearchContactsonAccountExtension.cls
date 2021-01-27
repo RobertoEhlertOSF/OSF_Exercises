@@ -65,14 +65,24 @@ public with sharing class SearchContactsonAccountExtension {
     }
 
     public void setAsPrimary(){
+        try{	   
+            //Reset contacts is primary attribute to false	           
+            List<Contact> actualContacts = new List<Contact>();	            
+      	    List<Contact> contactListToReset = new List<Contact>();	   
 
-        try{
-            Contact contactToUpdate = [SELECT Id, Is_Primary_Contact__c FROM Contact WHERE Id = :selectedContactId];
-            contactToUpdate.Is_Primary_Contact__c = true;
-            update contactToUpdate;
+            for(Contact contact : [SELECT Id, Is_Primary_Contact__c FROM Contact WHERE AccountId = :accountRecord.Id AND (Is_Primary_Contact__c = true OR Id = :selectedContactId)]){	
+                if (contact.Id == selectedContactId) {
+					contact.Is_Primary_Contact__c = true;
+				}
+				else if (contact.Is_Primary_Contact__c) {
+					// set Is_Primary_Contact__c to false only for contacts which have Is_Primary_Contact__c true
+					contact.Is_Primary_Contact__c = false;
+				}	
+               contactListToReset.add(contact);	
+            }
         }
-        catch(Exception ex){
+    	catch(Exception ex){
             ApexPages.addmessage(new ApexPages.Message(ApexPages.Severity.ERROR,string.valueof(ex))); 
         }
-    }    
+    }  
 }
