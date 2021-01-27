@@ -7,8 +7,8 @@ public class ScheduleSummaryAmountEmailTest {
     private static void executeTest(){
        
         Test.startTest();
-        	ScheduleSummaryAmountEmail sae = new ScheduleSummaryAmountEmail();        
-        	String jobId = System.schedule('ScheduledApexTest', CRON_EXP, sae);
+        ScheduleSummaryAmountEmail sae = new ScheduleSummaryAmountEmail();        
+        String jobId = System.schedule('ScheduledApexTest', CRON_EXP, sae);
         Test.stopTest();
 
 		integer jobsScheduled = [SELECT COUNT() FROM CronTrigger WHERE Id = :jobId];
