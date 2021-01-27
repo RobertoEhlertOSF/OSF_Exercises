@@ -2,10 +2,11 @@
 private class UpdateContactPhoneNumberTest {
     
     private static Id newAccountId;
-        
-	@testSetup
-    private static void setup(){       
-        
+    
+    @isTest
+    private static void test(){   
+        Test.startTest();                   
+
         Account newAccount = new Account();
         newAccount.name = 'Agro Company';
         insert newAccount;
@@ -33,15 +34,7 @@ private class UpdateContactPhoneNumberTest {
         newContacts.add(mainContact);
         
         insert newContacts;
-    }
-    
-    @isTest
-    private static void test(){        
-
-        Contact mainContact =
-            [SELECT Id, AccountId, Is_Primary_Contact__c FROM Contact Where lastName = 'Main Acc' AND Phone = '123456789' AND Is_Primary_Contact__c = TRUE];
         
-        Test.startTest();                   
         UpdateContactPhoneNumber ucpn = new UpdateContactPhoneNumber(mainContact.AccountId, '123456789' );
         Database.executeBatch(ucpn);
         Test.stopTest();

@@ -8,14 +8,18 @@ public with sharing class ContactTriggerHandler {
     public void handleBeforeInsert(List<Contact> newTriggerContact){
                 
         List<Contact> notAllowedContacts = new List<Contact>();
-        //Comparing primary contacts to be added to accounts that has primary contacts already.
-        //If matches, they will be included in a black list.        
-        for(Contact contact : newTriggerContact){
-            if(!isValidPrimaryContactForInsert(contact.AccountId)){
-				notAllowedContacts.add(contact);
-            }
-        }   
 
+        //Comparing primary contacts to be added to accounts that has primary contacts already.
+        //If matches, they will be included in a black list. 
+
+        for(Contact contactHasPrimary : [SELECT AccountId FROM Contact WHERE Is_Primary_Contact__c = true]){
+            for(Contact contactUpdated : newTriggerContact){
+                if(contactUpdated.AccountId == contactHasPrimary.AccountId){
+                    notAllowedContacts.add(contactUpdated);
+                }
+            }
+        } 
+        
         for(Contact notAllowedContact : notAllowedContacts){
             notAllowedContact.addError('There is a primary contact that already exist.');
         }
@@ -56,16 +60,4 @@ public with sharing class ContactTriggerHandler {
             Database.executeBatch(ucpn, 200);
         }
     }
-
-    private boolean isValidPrimaryContactForInsert(string accountId){          
-                
-        boolean isAllowed = true;
-
-        for(Contact contact : [SELECT AccountId FROM Contact WHERE Is_Primary_Contact__c = true]){
-            if(AccountId == contact.AccountId){
-                isAllowed = false;
-            }
-        } 
-        return isAllowed;
-    } 
 }
