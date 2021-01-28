@@ -1,0 +1,11 @@
+<apex:page standardController="Account" extensions="WeatherIntegrationControllerExtension" action="{!init}">
+    <apex:pageBlock title="Weather in {!Account.BillingCity}:">
+   		 <apex:panelGrid columns="2" cellspacing="10px" width="100%">         
+			 <apex:outputLabel value="Description"/>  
+             <apex:outputLabel value="Temperature"/>  
+             <apex:outputLabel value="{!wrapper.weather[0].description}"/>  
+             <apex:outputLabel value="{!wrapper.main.temp}"/>
+			 <apex:image url="{!urlIcon}"/>
+        </apex:panelGrid>
+    </apex:pageBlock>    
+</apex:page>
