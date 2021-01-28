@@ -29,10 +29,8 @@ public class UpdateContactPhoneNumber implements Database.Batchable<sObject>, Da
             update contactsToBeUpdated;
         }
         catch(Exception ex){
-			Error_Log__c errorLog = new Error_Log__c();
-            errorLog.Name = 'UpdateContactPhoneNumber';
-            errorLog.StackError__c = ex.getStackTraceString();   
-            errorLog.Message__c = ex.getMessage();
+			HandleException Handle = new HandleException(ex);
+            Handle.logException();
         }
     }
 
