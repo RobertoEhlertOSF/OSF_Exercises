@@ -1,0 +1,63 @@
+<apex:page id="AccountDetailing" standardController="Account" extensions="SearchContactsonAccountExtension">
+
+    <apex:pageBlock title="Hello {!$User.FirstName}!">
+        <h1>
+            You are viewing the {!account.name} account.
+        </h1>
+    </apex:pageBlock>
+
+    <apex:form>
+        <apex:pageBlock>
+            <apex:PageBlockSection Title="Account Primary Contact">
+                <apex:inputField value="{!Account.Name}" />
+                <apex:inputField value="{!Account.Type}" />
+                <apex:inputField value="{!Account.Phone}" />
+                <apex:inputField value="{!Account.AccountNumber}" />
+                <apex:inputField value="{!Account.Active__c}" />
+                <apex:inputField value="{!Account.Fax}" />
+            </apex:PageBlockSection>
+            <apex:pageBlockButtons>
+                <apex:commandButton value="Save" action="{!Save}" />
+                <apex:commandButton value="Cancel" action="{!Cancel}" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+
+    <apex:form>
+        <apex:pageBlock>
+            <apex:PageBlockSection Title="Search Related Contacts" columns="1">
+                <apex:inputText value="{!searchText}" />
+                <apex:commandButton value="Search" action="{!search}" reRender="contacts_list" />
+            </apex:PageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+
+    <apex:pageBlock>
+        <apex:form>
+            <apex:PageBlockSection Title="Related Contacts" id="contacts_list">
+                <apex:pageBlockTable value="{!getChildContacts}" var="contact">
+                    <apex:column headerValue="Name">
+                        <apex:outputText value="{!contact.Name}" />
+                    </apex:column>
+                    <apex:column headerValue="Title">
+                        <apex:outputText value="{!contact.Title}" />
+                    </apex:column>
+                    <apex:column headerValue="Phone">
+                        <apex:outputText value="{!contact.Phone}" />
+                    </apex:column>
+                    <apex:column headerValue="Is Primary Contact">
+                        <apex:image value="{!$Resource.ContactPrimary_Icon}" width="25" rendered="{!if (contact.Is_Primary_Contact__c == true, true, false)}"></apex:image>
+                    </apex:column>
+                    <apex:column>
+                        <apex:commandLink value="{!if(contact.Is_Primary_Contact__c==true, '', 'Set As Primary')}"                                          
+                                          action="{!setAsPrimary}"
+                                          onclick="if (! confirm ('Are you sure you want to set this contact as primary?')) return false;"
+                                          oncomplete="window.top.location.reload()">
+                            <apex:param name="selectedContact" value="{!contact.Id}" assignTo="{!selectedContactId}" />
+                        </apex:commandLink>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:PageBlockSection>
+        </apex:form>
+    </apex:pageBlock>
+</apex:page>
