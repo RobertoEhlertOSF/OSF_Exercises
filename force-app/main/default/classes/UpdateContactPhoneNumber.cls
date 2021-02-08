@@ -17,15 +17,21 @@ public class UpdateContactPhoneNumber implements Database.Batchable<sObject>, Da
 
     public void execute(Database.BatchableContext bc, List<Contact> scope){
 
-        List<Contact> contactsToBeUpdated = new List<Contact>();
+        try{
+            List<Contact> contactsToBeUpdated = new List<Contact>();
 
-        for(Contact contactRecord : scope){
-            contactRecord.Phone = phoneToBeUpdated;
-            recordsProcessed++;
-            contactsToBeUpdated.Add(contactRecord);
-        }    
-
-        update contactsToBeUpdated;
+            for(Contact contactRecord : scope){
+                contactRecord.Phone = phoneToBeUpdated;
+                recordsProcessed++;
+                contactsToBeUpdated.Add(contactRecord);
+            }    
+    
+            update contactsToBeUpdated;
+        }
+        catch(Exception ex){
+			HandleException Handle = new HandleException(ex);
+            Handle.logException();
+        }
     }
 
     public void finish(Database.BatchableContext bc){
