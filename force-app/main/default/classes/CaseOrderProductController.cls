@@ -17,7 +17,6 @@ public with sharing class CaseOrderProductController {
 
     @AuraEnabled
     public static void createCaseProduct(List<OrderItemWrapper> items){
-        System.debug(items);
         List<Case_Products__c> caseProducts = new List<Case_Products__c>();
         try {
             for(OrderItemWrapper wr : items){
