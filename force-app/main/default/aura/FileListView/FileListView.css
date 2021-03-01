@@ -1,0 +1,28 @@
+.THIS .card-header{
+    display: inline-block;
+    margin-top: -50px;
+    padding: 10px;
+}
+
+.THIS .button-delete{
+    float: right;
+    margin-right: 2%;
+    margin-top: -5px;
+}
+.THIS .footer-pagination-paragraph{
+    margin-right: 10px;
+}
+
+.THIS .footer-pagination-combobox{
+    margin-bottom: 20px;
+    width: 30px;
+}
+
+.THIS .footer-pagination-button{
+    margin: 0;
+}
+
+.THIS h4{
+	display: inline-block;
+    margin-left: 2%;
+}

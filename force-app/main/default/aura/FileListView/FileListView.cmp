@@ -1,0 +1,48 @@
+<aura:component controller="FileListViewController" implements="flexipage:availableForAllPageTypes" access="global" >
+	<!--Handlers Declaration-->
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+
+    <!--Atributes Declaration-->
+    <aura:attribute name="libraryFilter" type="String"/>
+    <aura:attribute name="file" type="Object"/>
+    <aura:attribute name="columns" type="List"/>    
+    <aura:attribute name="options" type="List" />
+    <aura:attribute name="selectedValue" type="String"/>
+    <aura:attribute name="delIds" type="List"/>
+    <aura:attribute name="pageNumber" type="Integer" default="1"/>
+    <aura:attribute name="pageSize" type="Integer" default="1"/>
+    <aura:attribute name="pagesLeft" type="Integer"/>
+    <aura:attribute name="isLastPage" type="Boolean" default="false"/>
+    <aura:attribute name="dataSize" type="Integer"/>
+    <aura:attribute name="optionsPagination" type="List" default="[
+    {'label': '1', 'value': '1'},
+    {'label': '2', 'value': '2'},
+    {'label': '5', 'value': '5'},
+	{'label': '10', 'value': '10'},]"/>
+    
+     <lightning:card>
+        <h4>Filter by Library</h4>
+   		<lightning:select class="card-header" name="mySelect" aura:id="mySelect" value="{!v.selectedValue}" onchange="{!c.handleChangePaginationLibraryFilter}">
+            <option value="">All Files</option>
+        	<aura:iteration items="{!v.options}" var="item">
+            	<option text="{!item.Name}" value="{!item.Name}" selected="{!item.selected}"/>
+        	</aura:iteration>
+    	</lightning:select>
+        <lightning:button aura:id="btnDelete" class="button-delete" variant="brand" disabled="true" onclick="{!c.doDelete}">Delete</lightning:button>
+
+    	<lightning:datatable 
+			data="{!v.file}"
+    		keyField="ContentDocumentId"
+        	columns="{!v.columns}"
+            onrowselection="{!c.handleRowAction}"/>
+         
+		<div class="slds-align_absolute-center">
+        	<p class="footer-pagination-paragraph">Page Size: {!v.pageSize}</p>
+    		<lightning:combobox class="footer-pagination-combobox" name="optionsPagination" value="" placeholder="" options="{!v.optionsPagination}" onchange="{!c.handleChangePagination}"/>
+            <lightning:button class="footer-pagination-button" label="{!'Page ' + v.pageNumber + '/' + v.pagesLeft}"/>
+            <lightning:button class="footer-pagination-button" label="Previous" onclick="{!c.handlePrev}" disabled="{! v.pageNumber == 1}"/>
+            <lightning:button class="footer-pagination-button" label="Next" disabled="{!v.isLastPage}" onclick="{!c.handleNext}"/>
+        </div>
+    </lightning:card>  
+</aura:component>
