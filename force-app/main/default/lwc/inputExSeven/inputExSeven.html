@@ -1,0 +1,18 @@
+<template>
+    <lightning-card>
+        <lightning-input type="text" onchange={handleObjectAPITextChange} label="Object API name"></lightning-input>
+        <lightning-input type="text" onchange={handleObjectAPIFieldChange} label="Field API names"></lightning-input>
+        <lightning-button variant="brand" label="Submit" title="Submit" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+    </lightning-card>
+    <div class="lgc-bg">
+        <lightning-tabset>
+            <lightning-tab label="Tree">                
+                <lightning-tree items={treeItems}></lightning-tree>                
+            </lightning-tab>
+            <lightning-tab label="Table">
+                <lightning-datatable data={dataTableItems} columns={columns} key-field="Id" hide-checkbox-column="true">
+                </lightning-datatable> 
+            </lightning-tab>
+        </lightning-tabset>
+    </div>
+</template>
