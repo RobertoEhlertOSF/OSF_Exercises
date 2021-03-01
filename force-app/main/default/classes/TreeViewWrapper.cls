@@ -1,4 +1,4 @@
-public class TreeViewWrapper {  
+public with sharing class TreeViewWrapper {  
 	@AuraEnabled
     public String label;
     @AuraEnabled
