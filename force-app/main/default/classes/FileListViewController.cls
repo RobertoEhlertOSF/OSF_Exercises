@@ -32,12 +32,12 @@ public with sharing class FileListViewController {
 	
     @AuraEnabled
     public static List<ContentWorkspace> getSelectOptions() {
-        return [SELECT Name FROM ContentWorkspace];
+        return [SELECT Name FROM ContentWorkspace LIMIT 100];
     }   
     
     @AuraEnabled
     public static Integer getTotalDocs() {
-        return [SELECT Count() FROM ContentDocument];
+        return [SELECT Count() FROM ContentDocument LIMIT 100];
     }
     
     @AuraEnabled
