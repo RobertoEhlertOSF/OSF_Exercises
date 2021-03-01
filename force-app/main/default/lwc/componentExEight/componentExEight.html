@@ -1,0 +1,16 @@
+<template>
+    <lightning-card variant="Narrow"  title="Order Items" icon-name="standard:scan_card">
+        <lightning-input type="text" name="search" label="Order Number" onchange={handleOrderNumberChange}></lightning-input>
+        <lightning-button variant="brand-outline" label="Search" title="Search" onclick={handleClickSearch} class="slds-m-left_x-small btn"></lightning-button>
+        <lightning-button variant="brand-outline" label="Select All" title="Select All" onclick={handleClickSelectAll} class="slds-m-left_x-small btn"></lightning-button>
+        <lightning-button variant="brand" label="Create Case Product" title="Create Case Product" onclick={handleCreateCaseProduct} class="btn slds-m-left_x-small"></lightning-button>
+
+        <lightning-datatable 
+            id="datatable"
+            column-widths-mode="auto"	
+            data={dataTableItems}
+            columns={columns} 
+            key-field="Id">
+        </lightning-datatable> 
+    </lightning-card>     
+</template> 
